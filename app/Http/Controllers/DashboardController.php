@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use GeminiAPI\Resources\Parts\TextPart;
 use GeminiAPI\Client;
 use Illuminate\Support\Facades\Http;
+use League\Csv\Reader;
 
 class DashboardController extends Controller
 {
@@ -35,6 +36,25 @@ class DashboardController extends Controller
 
         $aiResponse = $response->text();
 
-        return view('dashboard', ['exchangeToday' => $exchangeToday, 'cpiToday' => $cpiToday, 'prompt' => $prompt, 'aiResponse' => $aiResponse]);
+        $csv = Reader::createFromPath(database_path('exchange_rate.csv'), 'r');
+        $csv->setHeaderOffset(0);
+
+        $data = [];
+
+        foreach ($csv as $key => $record) {
+            $data[$record['Date']] = $record['Exchange'];
+        }
+
+        $data = collect($data);
+
+        $chartData = $data;
+
+        return view('dashboard', [
+            'exchangeToday' => $exchangeToday,
+            'cpiToday' => $cpiToday,
+            'prompt' => $prompt,
+            'aiResponse' => $aiResponse,
+            'chartData' => $chartData,
+        ]);
     }
 }
