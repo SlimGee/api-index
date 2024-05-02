@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use GeminiAPI\Resources\Parts\TextPart;
 use GeminiAPI\Client;
 use Illuminate\Support\Facades\Http;
@@ -49,12 +50,53 @@ class DashboardController extends Controller
 
         $chartData = $data;
 
+        $csv = Reader::createFromPath(database_path('cpi.csv'), 'r');
+        $csv->setHeaderOffset(0);
+
+        $data = [];
+
+        foreach ($csv as $key => $record) {
+            $data[$record['Date']] = [
+                'monthly_inflation' => $record['Monthly_Inflation_Rate'],
+                'annual_inflation' => $record['Annual_Inflation_Rate'],
+            ];
+        }
+
+        $data = collect($data);
+
+        $monthlyInflation = $data->map(fn($value) => $value['monthly_inflation']);
+
+        // get inflation rate from cpi data
+        $cpiData = $monthlyInflation->groupBy(function ($value, $key) {
+            return Carbon::parse($key)->format('Y');
+        })->get(2023);
+
+        $inflationRates = $cpiData
+            ->slice(1)
+            ->mapWithKeys(function ($cpi, $month) use ($cpiData) {
+                // dd($cpi, $cpiData->keys());
+
+                $prevMonth = $cpiData->keys()->firstWhere(function ($value, $key) use ($month, $cpiData) {
+                    return $key === array_search($month, $cpiData->keys()->all()) - 1;
+                });
+
+                $prevCpi = $cpiData->get($prevMonth);
+                $inflation = (abs($cpi - $prevCpi) / $prevCpi) * 100;
+
+                return [$month => round($inflation, 2)];
+            });
+
+        $annualInflation = $data->map(fn($value) => $value['annual_inflation']);
+
         return view('dashboard', [
             'exchangeToday' => $exchangeToday,
             'cpiToday' => $cpiToday,
             'prompt' => $prompt,
             'aiResponse' => $aiResponse,
             'chartData' => $chartData,
+            'monthlyInflation' => $monthlyInflation,
+            'annualInflation' => $annualInflation,
+            'inflationRates' => $inflationRates,
         ]);
     }
 }

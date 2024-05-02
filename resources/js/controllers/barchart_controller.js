@@ -4,7 +4,9 @@ import ApexCharts from "apexcharts";
 // Connects to data-controller="barchart"
 export default class extends Controller {
     connect() {
-        const useroptions = JSON.parse(this.element.dataset.options);
+        const useroptions =
+            JSON.parse(this.element.dataset.config || "{}") || {};
+        console.log(this.element.dataset.options);
         const options = Object.assign(
             {
                 series: [
@@ -42,7 +44,6 @@ export default class extends Controller {
 
                 xaxis: {
                     categories: [
-                        "Jan",
                         "Feb",
                         "Mar",
                         "Apr",
@@ -93,7 +94,7 @@ export default class extends Controller {
                     },
                 },
                 title: {
-                    text: "Inflation in Zimbabwe",
+                    text: "Inflation in Zimbabwe 2023",
                     floating: true,
                     offsetY: 330,
                     align: "center",

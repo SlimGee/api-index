@@ -33,5 +33,33 @@
                 </div>
             </div>
         </div>
+
+        <div class="mx-auto mt-6 space-x-6 max-w-5xl sm:px-6 lg:px-8">
+            <div class="bg-white rounded border shadow"
+                {{ stimulus_controller('barchart', [
+                    'series' => [
+                        [
+                            'name' => '1USD = ZWL',
+                            'data' => $chartData->values()->all(),
+                        ],
+                    ],
+                    'categories' => $chartData->keys()->all(),
+                    'title' => 'ZWL to 1 USD',
+                    'subtitle' => 'Exchange Rate until Dec 2023',
+                    'colors' => ['#dd2c00'],
+                ]) }}
+                data-config="{{ json_encode([
+                    'series' => [
+                        [
+                            'name' => 'Inflation',
+                            'data' => $inflationRates->values()->all(),
+                        ],
+                    ],
+                ]) }}"
+                class=""></div>
+        </div>
+    </div>
+
+
     </div>
 </x-app-layout>
