@@ -6,9 +6,14 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
+        "flixtechs-labs/stimulus-extra": "^0.0.5",
+        "gemini-api-php/client": "^1.4",
+        "hotwired-laravel/turbo-laravel": "^2.0.0-beta1",
         "laravel/breeze": "^2.0",
         "laravel/framework": "^11.0",
-        "laravel/tinker": "^2.9"
+        "laravel/tinker": "^2.9",
+        "league/csv": "^9.0",
+        "rubix/ml": "^2.4"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
@@ -25,7 +30,8 @@
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
-        }
+        },
+        "files": ["app/helpers.php"]
     },
     "autoload-dev": {
         "psr-4": {
