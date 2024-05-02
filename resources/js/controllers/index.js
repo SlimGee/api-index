@@ -5,6 +5,9 @@
 import { Stimulus } from '../libs/stimulus'
 
 
+import BarchartController from './barchart_controller'
+Stimulus.register('barchart', BarchartController)
+
 import ChartController from './chart_controller'
 Stimulus.register('chart', ChartController)
 

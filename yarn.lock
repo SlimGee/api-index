@@ -501,6 +501,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"alpine-turbo-drive-adapter@npm:^2.1.0":
+  version: 2.1.0
+  resolution: "alpine-turbo-drive-adapter@npm:2.1.0"
+  checksum: 10c0/f8de66cc9e5e2c6146e43b01bcf667bcc68e1d63a00c373fe9abce59804f5fc1a903d69f250e1aac3ef7a3aa8a077d43f91676ebf95582ae46ab25d21534fba4
+  languageName: node
+  linkType: hard
+
 "alpinejs@npm:^3.4.2":
   version: 3.13.10
   resolution: "alpinejs@npm:3.13.10"
@@ -1934,6 +1941,7 @@ __metadata:
     "@popperjs/core": "npm:^2.11.8"
     "@tailwindcss/forms": "npm:^0.5.2"
     air-datepicker: "npm:^3.5.0"
+    alpine-turbo-drive-adapter: "npm:^2.1.0"
     alpinejs: "npm:^3.4.2"
     apexcharts: "npm:^3.49.0"
     autoprefixer: "npm:^10.4.2"

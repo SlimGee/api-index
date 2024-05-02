@@ -24,6 +24,7 @@
     "dependencies": {
         "@popperjs/core": "^2.11.8",
         "air-datepicker": "^3.5.0",
+        "alpine-turbo-drive-adapter": "^2.1.0",
         "apexcharts": "^3.49.0",
         "lodash": "^4.17.21",
         "numeral": "^2.0.6"
